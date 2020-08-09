@@ -1,16 +1,19 @@
 import random
-from Tile import Tile
+from Domino import Domino
 
 class DominoSet:
     def __init__(self):
-        self.set = self.constructTiles()
+        self.dominoes = self.constructDominoes()
     
-    def constructTiles(self):
-        tiles = []
+    def constructDominoes(self):
+        dominoes = []
         for i in range(0,13):
             for j in range(i,13):
-                tiles.append(Tile(i,j))
-        return tiles
+                dominoes.append(Domino(i,j))
+        return dominoes
     
-    def drawRandomTile(self):
-        return self.set.pop(random.randrange(0, len(self.set)))
+    def drawRandomDomino(self):
+        return self.dominoes.pop(random.randrange(0, len(self.dominoes)))
+
+    def returnDomino(self, domino):
+        self.dominoes.append(domino)

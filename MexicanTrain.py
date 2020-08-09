@@ -1,9 +1,9 @@
-from Tile import Tile
+from Domino import Domino
 from DominoSet import DominoSet
 from Player import Player
-import matplotlib.pyplot as plt 
 
-tileCount = {
+# Number of dominoes in
+DominoCount = {
     2: 16,
     3: 15,
     4: 14,
@@ -14,40 +14,23 @@ tileCount = {
 }
 
 class MexicanTrain:
+    """
+        Class representing a game of Mexican Train based on a number of players
+    """
     def __init__(self, numPlayers):
         self.dominoes = DominoSet()
         self.players = self.generatePlayers(numPlayers)
 
     def generatePlayers(self, numPlayers):
-        players = []
-        for _ in range(numPlayers):
-            numToDraw = tileCount.get(numPlayers)
-            hand = self.drawHand(numToDraw)
-            players.append(Player(hand))
+        """
+            Create a list of Player objects with a number of dominoes in their hand,
+            the number of dominoes drawn from the domino pool is based on the number
+            of Players in the game
+        """
+        numToDraw = DominoCount.get(numPlayers)
+        players = [Player(self.drawHand(numToDraw)) for _ in range(numPlayers)]
         return players
 
     def drawHand(self, numToDraw):
-        hand = []
-        for _ in range(numToDraw):
-            hand.append(self.dominoes.drawRandomTile())
+        hand = [self.dominoes.drawRandomDomino() for _ in range(numToDraw)]
         return hand
-
-lengths = {i: 0 for i in range(0,17)}
-for i in range(0,10000):
-    game = MexicanTrain(2)
-    longestPath = game.players[0].findLongestPath(Tile(12,12), False)
-    length = len(longestPath)
-    lengths[length-1] += 1
-
-its = lengths.items()
-lengths = sorted(its)
-x = []
-y = []
-for v in lengths:
-    x.append(v[0])
-    y.append(v[1])
-
-# plotting a bar chart 
-plt.bar(x, y, tick_label = x, 
-        width = 0.8, color = ['red', 'green']) 
-plt.show()
