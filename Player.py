@@ -15,7 +15,7 @@ class Player:
         # Place the starting tile if it's in your hand
         if self.hasStartingDomino(startingDomino):
             if printChain == True:
-                print(f'You had the double {startingDomino.a.number}, placing!')
+                print(f'You had the double {startingDomino.leftEnd.number}, placing!')
             self.hand.remove(startingDomino)
         
         # Create the initial chain with the starting domino in it, and use the player's current hand
@@ -28,7 +28,7 @@ class Player:
 
         # Flip the dominoes to show the correct ends being connected
         for i in range(len(longestChain)-1):
-            if (longestChain[i].b.number != longestChain[i+1].a.number):
+            if (longestChain[i].rightEnd.number != longestChain[i+1].leftEnd.number):
                 longestChain[i+1].flip()
 
         # Print the length of the chain, and the chain in order

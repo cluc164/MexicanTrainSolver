@@ -8,7 +8,7 @@ def serializeChain(chain):
     """ Serialize a chain of dominoes as a string where each domino is separated by commas, and end numbers are separated by pipes"""
     chainAsString = ''
     for domino in chain:
-        chainAsString += f'{domino.a.number}|{domino.b.number},'
+        chainAsString += f'{domino.leftEnd.number}|{domino.rightEnd.number},'
     return chainAsString
 
 # Get the number of iterations (if applicable) and the starting domino number 
@@ -53,4 +53,4 @@ if (ITERATIONS != None):
 else:  
     game = MexicanTrain(2)
     player = game.players[0]
-    longestChain = player.findLongestChain(startingDomino, False)
+    longestChain = player.findLongestChain(startingDomino, True)
