@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ "$#" = "2" ]; then
-    py LongestPath.py $1 $2
+    py ./src/LongestPath.py $1 $2
 else
-    py LongestPath.py
+    py ./src/LongestPath.py
 fi
