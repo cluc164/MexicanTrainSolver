@@ -21,10 +21,10 @@ class Player:
         # Create the initial chain with the starting domino in it, and use the player's current hand
         # as the inital pool of dominoes 
         chain = [startingDomino]
-        tilesToPick = copy(self.hand)
+        availableDominoes = copy(self.hand)
 
         # Find the longest chain
-        longestChain = self.__longestChain(chain, tilesToPick)
+        longestChain = self.__longestChain(chain, availableDominoes)
 
         # Flip the dominoes to show the correct ends being connected
         for i in range(len(longestChain)-1):
@@ -33,7 +33,7 @@ class Player:
 
         # Print the length of the chain, and the chain in order
         if (printChain):
-            print(f"You placed {len(longestChain)-1} tiles")
+            print(f"You placed {len(longestChain)-1} dominoes")
             print(f"You have {len(self.hand)-len(longestChain)+1} tiles remaining")
             for domino in longestChain:
                 print(f'[{domino}]', end=" -> \n")
@@ -42,9 +42,9 @@ class Player:
     
     def __longestChain(self, currentChain, dominoesToPick):
         """ 
-            Function that iterates over an array over potential dominoes to chain together (tilesToPick)
+            Function that iterates over an array over potential dominoes to chain together (dominoesToPick)
             starting from the current path and if a single domino is able to be connected (the numbers on an end match),
-            this function is called recursively with that domino added into the path and removed from the tilesToPick
+            this function is called recursively with that domino added into the path and removed from the dominoesToPick
         """
         # Set the longestPath we've seen to the current path, so when the recursive call returns for each iteration,
         # we can see if it was able to create a longer chain
@@ -52,12 +52,12 @@ class Player:
         # Iterate over each tile in the potential tile pool
         for domino in dominoesToPick:
             # Check the unconnected end of the last domino in the current chain, and if it matches the number on either 
-            # end of the current tile
-            tileConnection = currentChain[-1].endsMatch(domino)
-            if (tileConnection):
-                # Connect the tiles on the end which they connect, so we don't accidentally check them later
-                tileConnection[0].connected = True
-                tileConnection[1].connected = True
+            # end of the current tile.
+            dominoConnection = currentChain[-1].endsMatch(domino)
+            if (dominoConnection):
+                # Connect the dominoes on the end which they connect, so we don't accidentally check them later
+                dominoConnection[0].connected = True
+                dominoConnection[1].connected = True
 
                 # Create copies of the current chain and pool of available dominoes
                 newChain = copy(currentChain)
@@ -77,7 +77,7 @@ class Player:
                 
                 # Disconnect the last domino in the current chain and the current domino so new paths can 
                 # be discovered in other possible chains
-                tileConnection[0].connected = False
-                tileConnection[1].connected = False
+                dominoConnection[0].connected = False
+                dominoConnection[1].connected = False
 
         return longestChain
