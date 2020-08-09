@@ -33,8 +33,8 @@ class Player:
 
         # Print the length of the chain, and the chain in order
         if (printChain):
-            print(f"You placed {len(longestChain)-1} dominoes")
-            print(f"You have {len(self.hand)-len(longestChain)+1} tiles remaining")
+            print(f"\nYou placed {len(longestChain)-1} dominoes")
+            print(f"You have {len(self.hand)-len(longestChain)+1} tiles remaining\n")
             for domino in longestChain:
                 print(f'[{domino}]', end=" -> \n")
         return longestChain
